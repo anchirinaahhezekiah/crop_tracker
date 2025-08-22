@@ -139,7 +139,16 @@ Testing
 
 Screenshots 
 
-*(Include screenshots or a short demo video link here if available)*
+### HomePage
+1[HomePage](assets/images/screenshots/firstpage.jpg)
+
+
+### EditPage
+2[EditPage](assets/images/screenshots/edit.jpg)
+
+
+### Status
+3[Status](assets/images/screenshots/tomatoes_status.jpg)
 
 
 ---
