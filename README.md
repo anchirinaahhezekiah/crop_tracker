@@ -152,7 +152,3 @@ Screenshots
 
 
 ---
-
-## Screen Recording
-
-![Video]
