@@ -140,19 +140,19 @@ Testing
 Screenshots 
 
 ### HomePage
-1[HomePage](assets/images/screenshots/firstpage.jpg)
+![HomePage](assets/images/screenshots/firstpage.jpg)
 
 
 ### EditPage
-2[EditPage](assets/images/screenshots/edit.jpg)
+![EditPage](assets/images/screenshots/edit.jpg)
 
 
 ### Status
-3[Status](assets/images/screenshots/tomatoes_status.jpg)
+![Status](assets/images/screenshots/tomatoes_status.jpg)
 
 
 ---
 
 ## Screen Recording
 
-1[Video]
+![Video]
