@@ -1,9 +1,9 @@
 
 ---
 
- ##Crop Tracker App
+ ## Crop Tracker App
 
-## Overview
+ Overview
 
 The **Crop Tracker App** is a simple Flutter-based mobile application developed as part of the *Junior Flutter Developer Assignment*. It is designed to help farmers (or users) manage and track their crops by storing important details such as planting dates, harvest dates, and crop status.
 
@@ -21,9 +21,9 @@ Tech Stack
 
 ---
 
-App Features
+## App Features
 
-### 1. Home Screen (Crop List)
+1. Home Screen (Crop List)
 
 * Displays a list of crops with:
 
@@ -34,7 +34,7 @@ App Features
 * Persists data using local storage.
 * Includes a **Floating Action Button (FAB)** to add a new crop.
 
-### 2. Add Crop Screen
+ 2. Add Crop Screen
 
 * Form-based screen to input:
 
