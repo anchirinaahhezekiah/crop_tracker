@@ -70,18 +70,15 @@ lib/
 │   └── crop_provider.dart   
 ├── screens/
 │   ├── home_screen.dart     
-│   ├── add_crop_screen.dart 
-│   ├── edit_crop_screen.dart
+│   ├── add_edit_crop_screen.dart 
 │   └── crop_detail_screen.dart 
 ├── widgets/
-│   ├── crop_card.dart      
-│   ├── crop_form.dart       
-│   └── status_chip.dart     
+│   ├── crop_card.dart     
 ├── services/
 │   └── storage_service.dart 
 └── utils/
     ├── constants.dart       
-    └── validators.dart      
+    └── theme.dart      
 ```
 
 ---
