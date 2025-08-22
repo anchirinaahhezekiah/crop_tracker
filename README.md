@@ -1,7 +1,7 @@
 
 ---
 
- 🌱 Crop Tracker App
+ ##Crop Tracker App
 
 ## Overview
 
@@ -81,8 +81,8 @@ Setup Instructions
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/crop-tracker.git
-   cd crop-tracker
+   git clone (https://github.com/anchirinaahhezekiah/crop_tracker
+   cd crop_tracker
    ```
 
 2. **Install Dependencies**
