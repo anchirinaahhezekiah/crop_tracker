@@ -1,6 +1,7 @@
---
 
-Crop Tracker App
+---
+
+ 🌱 Crop Tracker App
 
 ## Overview
 
@@ -10,7 +11,7 @@ This project demonstrates the use of **Flutter fundamentals**, **state managemen
 
 ---
 
-## 🛠 Tech Stack
+Tech Stack
 
 * **Flutter**: Latest stable version (3.x)
 * **Dart**: Core programming language
@@ -20,7 +21,7 @@ This project demonstrates the use of **Flutter fundamentals**, **state managemen
 
 ---
 
-## 📱 App Features
+App Features
 
 ### 1. Home Screen (Crop List)
 
@@ -60,7 +61,7 @@ This project demonstrates the use of **Flutter fundamentals**, **state managemen
 
 ---
 
-## 📂 Project Structure
+Project Structure
 
 ```plaintext
 lib/
@@ -75,7 +76,7 @@ lib/
 
 ---
 
-## ⚙️ Setup Instructions
+Setup Instructions
 
 1. **Clone the Repository**
 
@@ -100,7 +101,7 @@ lib/
 
 ---
 
-## 📌 State Management Choice
+State Management Choice
 
 This project uses **Provider** because:
 
@@ -112,7 +113,7 @@ Alternatives like **Riverpod** or **Bloc** are more powerful but add complexity,
 
 ---
 
-## 🚧 Assumptions & Limitations
+Assumptions & Limitations
 
 * No backend is used; all data is stored locally on the device.
 * Mock data (5 crops) is used for demonstration.
@@ -120,13 +121,13 @@ Alternatives like **Riverpod** or **Bloc** are more powerful but add complexity,
 
 ---
 
-## ✅ Testing
+Testing
 
 * A simple **unit test** is included to validate crop date logic (ensuring planting date is earlier than harvest date).
 
 ---
 
-## 📸 Screenshots (Optional)
+Screenshots 
 
 *(Include screenshots or a short demo video link here if available)*
 
