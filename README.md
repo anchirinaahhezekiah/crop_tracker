@@ -30,7 +30,7 @@ Tech Stack
   * Expected Harvest Date
   * Status (e.g., *Growing*, *Ready*, *Harvested*)
 * Persists data using local storage.
-* Includes a **Floating Action Button to add a new crop.
+* Includes a Floating Action Button to add a new crop.
 
  2. Add Crop Screen
 
