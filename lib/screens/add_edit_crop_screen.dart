@@ -35,18 +35,20 @@ class _AddEditCropScreenState extends State<AddEditCropScreen> {
     }
   }
 
+  // In your AddEditCropScreen _loadCropData method:
   void _loadCropData() {
     final cropProvider = context.read<CropProvider>();
     _originalCrop = cropProvider.getCropById(widget.cropId!);
 
     if (_originalCrop != null) {
       _nameController.text = _originalCrop!.name;
-      _notesController.text = _originalCrop!.notes;
+      _notesController.text = _originalCrop!.notes; // This should work now
       _plantingDate = _originalCrop!.plantingDate;
       _harvestDate = _originalCrop!.expectedHarvestDate;
       _status = _originalCrop!.status;
     }
   }
+
 
   @override
   void dispose() {

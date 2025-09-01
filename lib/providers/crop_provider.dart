@@ -1,111 +1,60 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import '../models/crop.dart';
 import '../services/storage_service.dart';
 
 class CropProvider with ChangeNotifier {
-  List<Crop> _crops = [];
-  bool _isLoading = false;
-  String _searchQuery = '';
+  final Uuid _uuid = const Uuid();
 
-  List<Crop> get crops {
-    if (_searchQuery.isEmpty) {
-      return List.unmodifiable(_crops);
-    }
-    return _crops
-        .where((crop) => crop.name.toLowerCase().contains(_searchQuery.toLowerCase()))
-        .toList();
-  }
+  List<Crop> _crops = [];
+  List<Crop> _filteredCrops = [];
+  String _searchQuery = '';
+  bool _isLoading = false;
 
   bool get isLoading => _isLoading;
+
+  // Get crops - filtered if searching
+  List<Crop> get crops => _searchQuery.isEmpty ? _crops : _filteredCrops;
+
   String get searchQuery => _searchQuery;
 
-  // Initialize crops from storage
-  Future<void> initialize() async {
-    _setLoading(true);
-    try {
-      _crops = await StorageService.loadCrops();
-    } catch (e) {
-      debugPrint('Error loading crops: $e');
-    } finally {
-      _setLoading(false);
-    }
-  }
+  // Search crops by name or notes
+  void searchCrops(String query) {
+    _searchQuery = query.trim();
 
-  // Add a new crop
-  Future<void> addCrop(Crop crop) async {
-    _crops.add(crop);
-    await _saveCrops();
+    if (_searchQuery.isEmpty) {
+      _filteredCrops = [];
+    } else {
+      final lowerQuery = _searchQuery.toLowerCase();
+
+      _filteredCrops = _crops.where((crop) {
+        final nameMatch = crop.name.toLowerCase().contains(lowerQuery);
+        final notesMatch = (crop.notes).toLowerCase().contains(lowerQuery);
+        return nameMatch || notesMatch;
+      }).toList();
+    }
+
     notifyListeners();
   }
 
-  // Update an existing crop
-  Future<void> updateCrop(String id, Crop updatedCrop) async {
-    final index = _crops.indexWhere((crop) => crop.id == id);
-    if (index != -1) {
-      _crops[index] = updatedCrop;
-      await _saveCrops();
-      notifyListeners();
-    }
-  }
+  void setSearchQuery(String query) => searchCrops(query);
 
-  // Delete a crop
-  Future<void> deleteCrop(String id) async {
-    _crops.removeWhere((crop) => crop.id == id);
-    await _saveCrops();
+  void clearSearch() {
+    _searchQuery = '';
+    _filteredCrops = [];
     notifyListeners();
-  }
-
-  // Update crop status
-  Future<void> updateCropStatus(String id, CropStatus status) async {
-    final index = _crops.indexWhere((crop) => crop.id == id);
-    if (index != -1) {
-      _crops[index] = _crops[index].copyWith(status: status);
-      await _saveCrops();
-      notifyListeners();
-    }
   }
 
   // Get crop by ID
   Crop? getCropById(String id) {
     try {
-      return _crops.firstWhere((crop) => crop.id == id);
-    } catch (e) {
+      return _crops.firstWhere((c) => c.id == id);
+    } catch (_) {
       return null;
     }
   }
 
-  // Set search query
-  void setSearchQuery(String query) {
-    _searchQuery = query;
-    notifyListeners();
-  }
-
-  // Clear search
-  void clearSearch() {
-    _searchQuery = '';
-    notifyListeners();
-  }
-
-  // Private methods
-  void _setLoading(bool loading) {
-    _isLoading = loading;
-    notifyListeners();
-  }
-
-  Future<void> _saveCrops() async {
-    try {
-      await StorageService.saveCrops(_crops);
-    } catch (e) {
-      debugPrint('Error saving crops: $e');
-    }
-  }
-
-  // Generate unique ID
-  String _generateId() {
-    return DateTime.now().millisecondsSinceEpoch.toString();
-  }
-
-  // Create crop with generated ID
+  //  Create a new crop with unique ID
   Crop createCrop({
     required String name,
     required DateTime plantingDate,
@@ -114,7 +63,7 @@ class CropProvider with ChangeNotifier {
     CropStatus status = CropStatus.growing,
   }) {
     return Crop(
-      id: _generateId(),
+      id: _uuid.v4(),
       name: name,
       plantingDate: plantingDate,
       expectedHarvestDate: expectedHarvestDate,
@@ -123,13 +72,58 @@ class CropProvider with ChangeNotifier {
     );
   }
 
-  // Get crops by status
-  List<Crop> getCropsByStatus(CropStatus status) {
-    return _crops.where((crop) => crop.status == status).toList();
+  //  Add crop
+  Future<void> addCrop(Crop crop) async {
+    _crops.add(crop);
+    await _saveToStorage();
+    if (_searchQuery.isNotEmpty) searchCrops(_searchQuery);
+    notifyListeners();
   }
 
-  // Get crop count by status
+  //  Update crop by ID
+  Future<void> updateCrop(String id, Crop updatedCrop) async {
+    final index = _crops.indexWhere((c) => c.id == id);
+    if (index != -1) {
+      _crops[index] = updatedCrop;
+      await _saveToStorage();
+      if (_searchQuery.isNotEmpty) searchCrops(_searchQuery);
+      notifyListeners();
+    }
+  }
+
+  //  Delete crop by ID
+  Future<void> deleteCrop(String id) async {
+    _crops.removeWhere((c) => c.id == id);
+    await _saveToStorage();
+    if (_searchQuery.isNotEmpty) searchCrops(_searchQuery);
+    notifyListeners();
+  }
+
+  //  Update crop status by ID
+  Future<void> updateCropStatus(String id, CropStatus newStatus) async {
+    final index = _crops.indexWhere((c) => c.id == id);
+    if (index != -1) {
+      _crops[index] = _crops[index].copyWith(status: newStatus);
+      await _saveToStorage();
+      notifyListeners();
+    }
+  }
+
+  //  Count crops by status
   int getCropCountByStatus(CropStatus status) {
-    return _crops.where((crop) => crop.status == status).length;
+    return _crops.where((c) => c.status == status).length;
+  }
+
+  //  Load and save
+  Future<void> initialize() async {
+    _isLoading = true;
+    notifyListeners();
+    _crops = await StorageService.loadCrops();
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> _saveToStorage() async {
+    await StorageService.saveCrops(_crops);
   }
 }

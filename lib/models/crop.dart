@@ -47,7 +47,7 @@ class Crop {
       expectedHarvestDate: expectedHarvestDate ?? this.expectedHarvestDate,
       notes: notes ?? this.notes,
       status: status ?? this.status,
-    );
+          );
   }
 
   // Convert crop to JSON
@@ -71,7 +71,7 @@ class Crop {
       expectedHarvestDate: DateTime.fromMillisecondsSinceEpoch(json['expectedHarvestDate']),
       notes: json['notes'] ?? '',
       status: CropStatus.fromString(json['status']),
-    );
+          );
   }
 
   // Formatted dates for display

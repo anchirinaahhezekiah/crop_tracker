@@ -114,11 +114,12 @@ class _HomeScreenState extends State<HomeScreen> {
       autofocus: true,
       style: const TextStyle(color: Colors.white),
       decoration: const InputDecoration(
-        hintText: 'Search crops...',
+        hintText: 'Search crops by name or notes...', // Updated hint text
         hintStyle: TextStyle(color: Colors.white70),
         border: InputBorder.none,
       ),
       onChanged: (value) {
+        // This now calls the updated search method
         context.read<CropProvider>().setSearchQuery(value);
       },
     );
