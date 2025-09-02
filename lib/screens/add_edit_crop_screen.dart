@@ -42,7 +42,7 @@ class _AddEditCropScreenState extends State<AddEditCropScreen> {
 
     if (_originalCrop != null) {
       _nameController.text = _originalCrop!.name;
-      _notesController.text = _originalCrop!.notes; // This should work now
+      _notesController.text = _originalCrop!.notes; 
       _plantingDate = _originalCrop!.plantingDate;
       _harvestDate = _originalCrop!.expectedHarvestDate;
       _status = _originalCrop!.status;
